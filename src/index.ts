@@ -17,7 +17,7 @@ export interface Config {
 }
 
 export const Config: Schema<Config> = Schema.object({
-  url: Schema.string().description("api路径").default("http://127.0.0.1:8699"),
+  url: Schema.string().description("API地址").default("http://127.0.0.1:8699"),
   onlyOneBot: Schema.boolean().default(true).description("是否仅允许onebot平台调用<br>关闭后不限制平台"),
   loginfo: Schema.boolean().default(false).description("是否打印API调用日志"),
 })
@@ -38,7 +38,12 @@ export function apply(ctx: Context, config: Config) {
         return
       }
 
-      const url = config.url.trim()
+      // 处理URL，移除末尾的斜杠
+      let url = config.url.trim();
+      if (url.endsWith('/')) {
+        url = url.slice(0, -1); // 移除最后一个字符
+      }
+
       try {
         const res = await ctx.http.get(`${url}/get_pdf_path/${userinputid}`)
 

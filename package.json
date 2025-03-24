@@ -9,14 +9,22 @@
     "dist"
   ],
   "license": "MIT",
-  "scripts": {},
   "keywords": [
     "chatbot",
     "koishi",
     "plugin"
   ],
-  "devDependencies": {},
   "peerDependencies": {
-    "koishi": "4.18.1"
+    "koishi": "^4.0.0"
+  },
+  "koishi": {
+    "service": {
+      "required": [
+        "http"
+      ]
+    }
+  },
+  "dependencies": {
+    "@koishijs/plugin-http": "^0.6.0"
   }
 }

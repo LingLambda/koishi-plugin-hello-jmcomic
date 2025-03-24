@@ -1,4 +1,5 @@
-import { Context, Schema, Session } from "koishi";
+import { Context, Schema, Session, h} from "koishi";
+import { pathToFileURL } from 'url'
 import type { OneBotBot } from "koishi-plugin-adapter-onebot";
 
 export const usage = `
@@ -47,7 +48,8 @@ const getJM = async (
     console.log(res)
     if (res.success == true) {
       const { data: pdf_path, name } = res;
-      session.onebot.uploadGroupFile(session.onebot.group_id, pdf_path,name);
+      const final_msg = h.file(pathToFileURL(pdf_path).href)
+      session.send(final_msg)
     } else {
       session.send("后台发生错误");
     }

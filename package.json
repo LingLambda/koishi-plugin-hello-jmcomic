@@ -1,0 +1,22 @@
+{
+  "name": "koishi-plugin-hello-jmcomic",
+  "description": "获取jm漫画，仅支持onebot",
+  "version": "0.0.1",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "dist"
+  ],
+  "license": "MIT",
+  "scripts": {},
+  "keywords": [
+    "chatbot",
+    "koishi",
+    "plugin"
+  ],
+  "devDependencies": {},
+  "peerDependencies": {
+    "koishi": "4.18.1"
+  }
+}

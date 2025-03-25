@@ -1,5 +1,5 @@
-import { Context, Schema, Session, h} from "koishi";
-import { pathToFileURL } from 'url'
+import { Context, Schema, Session, h } from "koishi";
+import { pathToFileURL } from "url";
 import type { OneBotBot } from "koishi-plugin-adapter-onebot";
 
 export const usage = `
@@ -38,18 +38,18 @@ const getJM = async (
     session.send("暂仅支持onebot适配器喵");
     return;
   }
-  if(!id){
-    session.send('未提供id喵')
+  if (!id) {
+    session.send("未提供id喵");
     return;
   }
 
   const url = config.url;
   ctx.http.get(`${url}/get_pdf_path/${id}`).then((res: any) => {
-    console.log(res)
+    console.log(res);
     if (res.success == true) {
       const { data: pdf_path, name } = res;
-      const final_msg = h.file(pathToFileURL(pdf_path).href)
-      session.send(final_msg)
+      const final_msg = h.file(pathToFileURL(pdf_path).href);
+      session.send(final_msg);
     } else {
       session.send("后台发生错误");
     }

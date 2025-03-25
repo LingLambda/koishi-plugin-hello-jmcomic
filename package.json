@@ -1,6 +1,7 @@
 {
   "name": "koishi-plugin-hello-jmcomic",
-  "version": "0.0.1",
+  "description": "获取jm漫画，仅支持onebot",
+  "version": "0.0.3",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "files": [

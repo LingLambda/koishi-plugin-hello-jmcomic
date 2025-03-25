@@ -1,15 +1,14 @@
 import { Context, h, Schema, Session } from "koishi";
 import { pathToFileURL } from "url";
 
-export const usage = `
-  <h2>请先部署 <a href="https://github.com/LingLambda/JMComic-Api">JMComic-Api</a></h2>
+export const inject = ["http"]
 
-  <p>使用： jmid 422866 获取422866编号的jm漫画</p>
-`;
-export const name = "hello-jmcomic";
+export const usage =
+  `
+<h2>请先部署 <a href="https://github.com/LingLambda/JMComic-Api">JMComic-Api</a></h2>
 
-export const inject = ["http"];
-
+<p>使用： jmid 422866 获取422866编号的jm漫画</p>
+`
 export interface Config {
   baseUrl: string;
   isPath: boolean;
@@ -32,7 +31,6 @@ export function apply(ctx: Context, config: Config) {
     .action(async ({ session }, id) => {
       await getJM(ctx, config, session, id);
     })
-    .example("jmid 422866 获取422866编号的jm漫画");
 }
 
 const getJM = async (

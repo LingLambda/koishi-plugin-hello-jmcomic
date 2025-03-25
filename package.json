@@ -1,7 +1,7 @@
 {
   "name": "koishi-plugin-hello-jmcomic",
-  "description": "获取jm漫画，仅支持onebot",
-  "version": "0.0.3",
+  "description": "获取jm漫画，真的能用！使用前请先部署[（</rp><rt>后端！！</rt><rp>）</rp></ruby>](https://github.com/LingLambda/JMComic-Api)",
+  "version": "0.0.4",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "files": [

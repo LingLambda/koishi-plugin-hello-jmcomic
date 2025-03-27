@@ -1,14 +1,13 @@
-import { Context, h, Schema, Session } from "koishi";
+import { Binary, Context, h, Schema, Session } from "koishi";
 import { pathToFileURL } from "url";
 
-export const inject = ["http"]
+export const inject = ["http"];
 
-export const usage =
-  `
+export const usage = `
 <h2>请先部署 <a href="https://github.com/LingLambda/JMComic-Api">JMComic-Api</a></h2>
 
 <p>使用： jmid 422866 获取422866编号的jm漫画</p>
-`
+`;
 export interface Config {
   baseUrl: string;
   isPath: boolean;
@@ -30,7 +29,7 @@ export function apply(ctx: Context, config: Config) {
     .command("jmid <id>", "获取指定id jm漫画")
     .action(async ({ session }, id) => {
       await getJM(ctx, config, session, id);
-    })
+    });
 }
 
 const getJM = async (
@@ -51,37 +50,36 @@ const getJM = async (
     baseUrl = baseUrl.slice(0, -1); // 移除最后一个字符
   }
 
-  if (!isPath) {
-    const url = `${baseUrl}/get_pdf/${id}`;
-    try {
-      const pdf_file = await ctx.http.get(url);
-      await session.send(h.file(pdf_file, "application/pdf"));
-      return;
-    } catch (err: any) {
-      ctx.logger.error(`API 请求失败: ${err.message}`);
-      await session.send(`请求失败，请查看日志！`);
-    }
+  let url = `${baseUrl}/get_pdf/${id}`;
+  if (isPath) {
+    url = `${baseUrl}/get_pdf_path/${id}`;
   }
-  const url = `${baseUrl}/get_pdf_path/${id}`;
 
   try {
     const res = await ctx.http.get(url);
 
-    // 日志记录
     if (config.loginfo) {
       ctx.logger.info(`API Response: ${JSON.stringify(res)}`);
     }
 
-    if (res.success) {
-      const { data, message, name } = res;
-      const file = h.file(pathToFileURL(data).href);
-      await session.send(file);
-    } else {
+    if (res.success !== true) {
       await session.send(`后台发生错误: ${res.message || "未知错误"}`);
       ctx.logger.error(`后台发生错误，请查看日志！`);
+      return;
     }
+    const { data, name } = res;
+    console.log(name);
+    const file = isPath
+      ? h.file(pathToFileURL(data).href, { title: name })
+      : h.file(Binary.fromBase64(data), "application/pdf", { title: name });
+    if (config.loginfo) {
+      ctx.logger.info(`File: ${file}`);
+    }
+    await session.send(file);
   } catch (err: any) {
     ctx.logger.error(`API 请求失败: ${err.message}`);
     await session.send(`请求失败，请查看日志！`);
+  } finally {
+    return;
   }
 };

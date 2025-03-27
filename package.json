@@ -1,7 +1,7 @@
 {
   "name": "koishi-plugin-hello-jmcomic",
   "description": "获取jm漫画，真的能用！使用前请先部署后端！！[<ruby>**点我看后端教程**</ruby>](https://github.com/LingLambda/JMComic-Api)",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "files": [
